@@ -1,5 +1,2 @@
 language: cpp
 dist: trusty
-script:
-  - cmake .
-  - cmake --build .
