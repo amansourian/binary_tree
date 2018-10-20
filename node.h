@@ -8,7 +8,7 @@ struct node {
   // members
   Data data{};
   int count{};
-  node<Data> *gThan, *lThan;
+  node<Data> *left, *right;
 
   // constructors and destructor
   explicit node(Data d = Data(), int c = 1);
@@ -40,19 +40,19 @@ struct node {
 
 template<typename Data>
 node<Data>::node(Data d, int c)
-: data{d}, count{c}, gThan{nullptr}, lThan{nullptr} {}
+: data{d}, count{c}, left{nullptr}, right{nullptr} {}
 
 template<typename Data>
 node<Data>::node(const node<Data> &other)
 : node(other.data, other.count) {}
-//: data{other.data}, count{other.count}, gThan{nullptr}, lThan{nullptr} {}
+//: data{other.data}, count{other.count}, left{nullptr}, right{nullptr} {}
 
 template<typename Data>
 node<Data>& node<Data>::operator=(const node<Data> &other) {
   if (this != &other) {
     data = other.data;
     count = other.count;
-    gThan = lThan = nullptr;
+    left = right = nullptr;
   }
   return *this;
 }
@@ -69,7 +69,7 @@ template<typename Data>
 node<Data>::~node() {
   data = Data();
   count = 0;
-  gThan = lThan = nullptr;
+  left = right = nullptr;
 }
 
 template<typename D>
