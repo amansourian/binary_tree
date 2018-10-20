@@ -1,2 +1,2 @@
 # binary_tree
-binary tree class in C++
+generic binary tree class in C++ made with templates
