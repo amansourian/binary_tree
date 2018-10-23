@@ -16,19 +16,28 @@ int main() {
   BinaryTree<int> tree;
 
   // begin test
-  cout << "Starting!!!" << endl;
-  for (size_t i = 0; i < 25; ++i) {
-    data = randInt(engine);
-    cout << "Just input: " << data << endl;
-    tree << data;
+  try {
+    cout << "Starting!!!" << endl;
+    for (size_t i = 0; i < 25; ++i) {
+      data = randInt(engine);
+      cout << "Just input: " << data << endl;
+      tree << data;
+    }
+    cout << "Your tree contains: " << tree << endl << endl;
+    for (size_t i = 0; i < 25; ++i) {
+      data = randInt(engine);
+      cout << "Trying to delete: " << data << endl;
+      tree.deleteData(data);
+    }
+    cout << "Your tree contains: " << tree << endl << endl;
+  } catch (BINARY_TREE_ERRORS e) {
+    switch (e) {
+      case TREE_FULL: cout << "ERROR: Tree Full..." << endl; break;
+      case TREE_EMPTY: cout << "ERROR: Tree Empty..." << endl; break;
+    }
+  } catch (...) {
+    cout << "Unknown Error..." << endl;
   }
-  cout << "Your tree contains: " << tree << endl << endl;
-  for (size_t i = 0; i < 25; ++i) {
-    data = randInt(engine);
-    cout << "Trying to delete: " << data << endl;
-    tree.deleteData(data);
-  }
-  cout << "Your tree contains: " << tree << endl << endl;
   // end test
 
   return 0;
