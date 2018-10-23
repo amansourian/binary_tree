@@ -3,121 +3,112 @@
 #include <iostream>
 #include <fstream>
 
-template<typename Data>
+template<typename T>
 struct node {
   // members
-  Data data{};
-  int count{};
-  node<Data> *left, *right;
+  T m_data{};
+  int m_count{};
+  node<T> *p_left, *p_right;
 
   // constructors and destructor
-  explicit node(Data d = Data(), int c = 1);
-  ~node();                                          // destructor
-  node(const node<Data> &other);                    // copy constructor
-  node<Data>& operator=(const node<Data> &other);   // copy assignment operator
-  node<Data>& operator+=(const node<Data> &other);
+  explicit node(T data = T(), int count = 1) : m_data{data}, m_count{count}, p_left{nullptr}, p_right{nullptr} {}
+  node(const node<T> &other) : node{other.m_data, other.m_count} {}  // copy constructor
+  node<T>& operator=(const node<T> &other);                          // copy assignment operator
+  node<T>& operator+=(const node<T> &other);                         // counter
+  ~node();                                                           // destructor
 
   // friend comparison operators
-  template<typename D>
-  friend bool operator==(const node<D> &x, const node<D> &y);
-  template<typename D>
-  friend bool operator!=(const node<D> &x, const node<D> &y);
-  template<typename D>
-  friend bool operator>=(const node<D> &x, const node<D> &y);
-  template<typename D>
-  friend bool operator<=(const node<D> &x, const node<D> &y);
-  template<typename D>
-  friend bool operator>(const node<D> &x, const node<D> &y);
-  template<typename D>
-  friend bool operator<(const node<D> &x, const node<D> &y);
+  template<typename U>
+  friend bool operator==(const node<U> &x, const node<U> &y);
+  template<typename U>
+  friend bool operator!=(const node<U> &x, const node<U> &y);
+  template<typename U>
+  friend bool operator>=(const node<U> &x, const node<U> &y);
+  template<typename U>
+  friend bool operator<=(const node<U> &x, const node<U> &y);
+  template<typename U>
+  friend bool operator>(const node<U> &x, const node<U> &y);
+  template<typename U>
+  friend bool operator<(const node<U> &x, const node<U> &y);
 
   // friend io operators
-  template<typename D>
-  friend std::ostream& operator<<(std::ostream& out, const node<D> &other);
-  template<typename D>
-  friend std::istream& operator>>(std::istream& in, node<D> &other);
+  template<typename U>
+  friend std::ostream& operator<<(std::ostream& out, const node<U> &other);
+  template<typename U>
+  friend std::istream& operator>>(std::istream& in, node<U> &other);
 };
 
-template<typename Data>
-node<Data>::node(Data d, int c)
-: data{d}, count{c}, left{nullptr}, right{nullptr} {}
-
-template<typename Data>
-node<Data>::node(const node<Data> &other)
-: node(other.data, other.count) {}
-//: data{other.data}, count{other.count}, left{nullptr}, right{nullptr} {}
-
-template<typename Data>
-node<Data>& node<Data>::operator=(const node<Data> &other) {
+template<typename T>
+node<T>& node<T>::operator=(const node<T> &other) {
   if (this != &other) {
-    data = other.data;
-    count = other.count;
-    left = right = nullptr;
+    m_data = other.m_data;
+    m_count = other.m_count;
+    p_left = p_right = nullptr;
   }
   return *this;
 }
 
-template<typename Data>
-node<Data>& node<Data>::operator+=(const node<Data> &other) {
-  if (this != &other && data == other.data) {
-    count += other.count;
+template<typename T>
+node<T>& node<T>::operator+=(const node<T> &other) {
+  if (this != &other && m_data == other.m_data) {
+    m_count += other.m_count;
   }
   return *this;
 }
 
-template<typename Data>
-node<Data>::~node() {
-  data = Data();
-  count = 0;
-  left = right = nullptr;
+template<typename T>
+node<T>::~node() {
+  m_data = T();
+  m_count = 0;
+  p_left = p_right = nullptr;
 }
 
-template<typename D>
-bool operator==(const node<D> &x, const node<D> &y) {
-  return x.data == y.data;
+template<typename U>
+bool operator==(const node<U> &x, const node<U> &y) {
+  return x.m_data == y.m_data;
 }
 
-template<typename D>
-bool operator>=(const node<D> &x, const node<D> &y) {
-  return x.data >= y.data;
+template<typename U>
+bool operator!=(const node<U> &x, const node<U> &y) {
+  return x.m_data != y.m_data;
 }
 
-template<typename D>
-bool operator<=(const node<D> &x, const node<D> &y) {
-  return x.data <= y.data;
+template<typename U>
+bool operator>=(const node<U> &x, const node<U> &y) {
+  return x.m_data >= y.m_data;
 }
 
-template<typename D>
-bool operator!=(const node<D> &x, const node<D> &y) {
-  return x.data != y.data;
+template<typename U>
+bool operator<=(const node<U> &x, const node<U> &y) {
+  return x.m_data <= y.m_data;
 }
 
-template<typename D>
-bool operator>(const node<D> &x, const node<D> &y) {
-  return x.data > y.data;
+template<typename U>
+bool operator>(const node<U> &x, const node<U> &y) {
+  return x.m_data > y.m_data;
 }
 
-template<typename D>
-bool operator<(const node<D> &x, const node<D> &y) {
-  return x.data < y.data;
+template<typename U>
+bool operator<(const node<U> &x, const node<U> &y) {
+  return x.m_data < y.m_data;
 }
 
-template<typename D>
-std::ostream& operator<<(std::ostream& out, const node<D> &other) {
-  out << other.data << "[" << other.count << "] ";
+template<typename U>
+std::ostream& operator<<(std::ostream& out, const node<U> &n) {
+  out << n.m_data << "[" << n.m_count << "] ";
   return out;
 }
 
-template<typename D>
-std::istream& operator>>(std::istream& in, node<D> &other) {
+template<typename U>
+std::istream& operator>>(std::istream& in, node<U> &n) {
   char junk = 0;
   if (&in == &std::cin) {
-    std::cout << "Data: ";
-    in >> other.data;
+    std::cout << "T: ";
+    in >> n.m_data;
     std::cout << "Count: ";
-    in >> other.count;
+    in >> n.m_count;
   } else {
-    in >> other.data >> junk >> other.count >> junk;
+    in >> n.m_data >> junk >> n.m_count >> junk;
   }
   return in;
 }
