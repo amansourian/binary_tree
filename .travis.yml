@@ -1,2 +1,16 @@
 language: cpp
+sudo: false
 dist: trusty
+
+script:
+  - cmake .
+  - cmake --build .
+
+matrix:
+  include:
+    - os: osx
+      osx_image: xcode10.1
+      env: 
+        - UNIT_TESTS=true BOOST_VERSION=default
+        - MATRIX_EVAL="brew install gcc && CC=gcc-7 && CXX=g++-7"
+
