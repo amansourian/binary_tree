@@ -1,16 +1,14 @@
-language: cpp
-sudo: false
 dist: trusty
+sudo: false
+language: cpp
+
+addons:
+  apt:
+    sources:
+      - llvm-toolchain-trustry-5.0
+    packages:
+      - clang-5.0
 
 script:
-  - cmake .
+  - CXX=/usr/bin/clang++-5.0 CC=/usr/bin/clang-5.0 cmake .
   - cmake --build .
-
-matrix:
-  include:
-    - os: osx
-      osx_image: xcode10.1
-      env: 
-        - UNIT_TESTS=true BOOST_VERSION=default
-        - MATRIX_EVAL="brew install gcc && CC=gcc-7 && CXX=g++-7"
-
